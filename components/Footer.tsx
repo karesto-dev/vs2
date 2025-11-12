@@ -23,9 +23,27 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h3 className="text-xl font-bold font-orbitron text-mauve-profond mb-4">
+            <motion.h3
+              animate={{
+                textShadow: [
+                  '0 0 10px rgba(107, 70, 193, 0.5)',
+                  '0 0 20px rgba(107, 70, 193, 0.8)',
+                  '0 0 10px rgba(107, 70, 193, 0.5)',
+                ],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              className="text-xl font-bold font-orbitron text-mauve-profond mb-4 relative"
+              style={{
+                filter: 'drop-shadow(0 0 8px rgba(107, 70, 193, 0.6))',
+              }}
+            >
               Vorion Studio
-            </h3>
+            </motion.h3>
             <p className="text-gray-600">
               Spécialisé en développement de SaaS, applications mobiles, sites web, e-commerce et création digitale.
             </p>
@@ -56,7 +74,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold font-orbitron mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-600">
               <li>Email: contact@vorionstudio.com</li>
-              <li>Téléphone: +33 X XX XX XX XX</li>
+              <li>Téléphone: +212 6 60 89 35 53</li>
             </ul>
           </motion.div>
         </div>

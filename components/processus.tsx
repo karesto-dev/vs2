@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Image as ImageIcon, Video, MessageCircle, PenTool, Settings, Rocket, CheckCircle2, Clock, Users, FileText, Zap, Shield } from 'lucide-react'
+import { Image as ImageIcon, MessageCircle, PenTool, Settings, Rocket, CheckCircle2, Clock, Users, FileText, Zap, Shield } from 'lucide-react'
 
 const etapes = [
   {
@@ -273,20 +273,6 @@ export default function ProcessusPage() {
           </div>
         </motion.div>
 
-        {/* Section Vidéo explicative */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-24"
-        >
-          <div className="bg-gray-100 rounded-2xl p-16 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center min-h-[500px]">
-            <Video className="w-24 h-24 text-gray-400 mb-4" />
-            <p className="text-gray-500 text-lg font-medium">Video Placeholder</p>
-            <p className="text-gray-400 text-sm mt-2">1920x1080px - Processus en détail</p>
-          </div>
-        </motion.div>
       </div>
     </div>
   )

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import FlipCard from './FlipCard'
-import { Image as ImageIcon, Video, Users, Target, Award, TrendingUp, Zap, Heart, Globe, Code, Layers, Palette, Film, Megaphone, Lightbulb, ArrowUp } from 'lucide-react'
+import { Image as ImageIcon, Users, Target, Award, TrendingUp, Zap, Heart, Globe, Code, Layers, Palette, Film, Megaphone, Lightbulb, ArrowUp } from 'lucide-react'
 
 export default function AProposPage() {
   return (
@@ -196,21 +196,6 @@ export default function AProposPage() {
               )
             })}
           </div>
-        </section>
-
-        {/* Section Vidéo - Large */}
-        <section className="mb-32">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-gray-100 rounded-2xl p-16 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center min-h-[500px]"
-          >
-            <Video className="w-24 h-24 text-gray-400 mb-4" />
-            <p className="text-gray-500 text-lg font-medium">Video Placeholder</p>
-            <p className="text-gray-400 text-sm mt-2">1920x1080px - Présentation Vorion Studio</p>
-          </motion.div>
         </section>
 
         {/* Section Nos Cellules d'Experts */}

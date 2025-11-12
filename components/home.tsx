@@ -99,16 +99,16 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-1"
           >
-            <div className="relative">
+            <div className="relative h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-mauve-profond to-bleu-gris rounded-2xl transform rotate-6 opacity-20"></div>
-              <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                <Image
-                  src="/images/home-hero_.webp"
-                  alt="Vorion Studio - Hero"
-                  width={800}
-                  height={600}
-                  className="w-full h-full object-cover"
-                  priority
+              <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-2xl h-full min-h-[400px]">
+                <video
+                  src="/images/Home_hero.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ function APropos() {
                 />
               </div>
               {/* Overlay glassmorphique */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8"></div>
               
               {/* Effet brillant animé */}
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 z-20">
@@ -222,7 +222,7 @@ function APropos() {
                 />
               </div>
               {/* Overlay glassmorphique */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8"></div>
               
               {/* Effet brillant animé */}
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 z-20">
@@ -268,7 +268,7 @@ function APropos() {
                 />
               </div>
               {/* Overlay glassmorphique */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/15 to-white/8"></div>
               
               {/* Effet brillant animé */}
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 z-20">
@@ -582,33 +582,41 @@ const etapes = [
   {
     numero: '01',
     titre: 'Consultation',
-    description: 'Nous analysons vos besoins et définissons ensemble la meilleure stratégie.',
+    description: 'Nous analysons vos besoins et définissons ensemble la meilleure stratégie pour votre projet digital.',
     Icon: MessageCircle,
+    image: 'consultation',
   },
   {
     numero: '02',
     titre: 'Conception',
-    description: 'Notre équipe crée des maquettes et prototypes détaillés.',
+    description: 'Notre équipe crée des maquettes et prototypes détaillés pour visualiser votre solution.',
     Icon: PenTool,
+    image: 'conception',
   },
   {
     numero: '03',
     titre: 'Développement',
-    description: 'Nous développons votre solution avec les meilleures pratiques.',
+    description: 'Nous développons votre solution avec les meilleures pratiques et technologies modernes.',
     Icon: Settings,
+    image: 'developpement',
   },
   {
     numero: '04',
     titre: 'Lancement',
-    description: 'Nous testons, optimisons et lançons votre projet.',
+    description: 'Nous testons, optimisons et lançons votre projet avec un accompagnement complet.',
     Icon: Rocket,
+    image: 'lancement',
   },
 ]
 
 function CommentCaMarche() {
   return (
-    <section id="processus" className="py-24 px-6 bg-white">
-      <div className="container mx-auto max-w-7xl">
+    <section id="processus" className="py-24 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
+      {/* Éléments décoratifs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-mauve-profond/5 rounded-full blur-3xl -z-0"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-bleu-gris/5 rounded-full blur-3xl -z-0"></div>
+      
+      <div className="container mx-auto max-w-7xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -616,6 +624,15 @@ function CommentCaMarche() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="inline-block px-4 py-2 bg-mauve-profond/10 text-mauve-profond rounded-full text-sm font-semibold mb-6"
+          >
+            Notre Processus
+          </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold font-orbitron text-gray-900 mb-6">
             Comment ça <span className="text-mauve-profond">marche</span>
           </h2>
@@ -625,55 +642,131 @@ function CommentCaMarche() {
         </motion.div>
 
         {/* Cartes en ligne avec flèches */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 mb-16">
           {etapes.map((etape, index) => {
             const IconComponent = etape.Icon
             return (
               <div key={index} className="flex items-center">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="w-[280px] flex-shrink-0"
+                  transition={{ duration: 0.6, delay: index * 0.15, type: "spring", stiffness: 100 }}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="relative w-[300px] flex-shrink-0 group"
                 >
-                  <FlipCard
-                    front={
-                      <div className="flex flex-col h-full justify-center p-6">
-                        <div className="flex items-center justify-center mb-4">
-                          <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gray-50 border border-gray-100">
-                            <IconComponent className="w-7 h-7 text-gray-700" />
+                  {/* Effet de glow au hover */}
+                  <div className="absolute -inset-2 bg-gradient-to-r from-mauve-profond/20 to-bleu-gris/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                  
+                  {/* Background image pour toute la carte */}
+                  <div className="absolute inset-0 rounded-xl overflow-hidden">
+                    <Image
+                      src={`/images/home-processus-${etape.image}_.webp`}
+                      alt={etape.titre}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {/* Overlay léger pour la lisibilité */}
+                  <div className="absolute inset-0 bg-gray-100/40 rounded-xl"></div>
+                  
+                  {/* Numéro stylisé avec effet glow - dépasse de la carte */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.15 + 0.2, type: "spring" }}
+                    className="absolute -top-3 -right-3 z-30"
+                  >
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-mauve-profond/30 blur-md rounded-lg"></div>
+                      <div className="relative text-3xl font-bold font-orbitron text-mauve-profond bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg border-2 border-mauve-profond/30 shadow-xl">
+                        {etape.numero}
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <div className="relative h-[320px] perspective-1000">
+                    <FlipCard
+                      front={
+                        <div className="relative flex flex-col h-full justify-center p-8 z-10">
+                          {/* Icône stylisée */}
+                          <div className="flex items-center justify-center mb-6">
+                            <motion.div
+                              whileHover={{ rotate: 360, scale: 1.1 }}
+                              transition={{ duration: 0.6 }}
+                              className="relative"
+                            >
+                              <div className="absolute inset-0 bg-mauve-profond/20 blur-xl rounded-full"></div>
+                              <div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-white/95 backdrop-blur-md border-4 border-white shadow-2xl">
+                                <IconComponent className="w-10 h-10 text-mauve-profond" />
+                              </div>
+                            </motion.div>
+                          </div>
+                          
+                          {/* Titre */}
+                          <h3 className="text-2xl font-bold font-orbitron text-gray-900 text-center mb-2 drop-shadow-lg">
+                            {etape.titre}
+                          </h3>
+                        </div>
+                      }
+                      back={
+                        <div className="relative flex flex-col h-full justify-center p-8 z-10">
+                          <div className="absolute inset-0 bg-gradient-to-br from-mauve-profond/95 via-bleu-gris/95 to-mauve-profond/95 rounded-xl"></div>
+                          <div className="relative">
+                            <div className="text-3xl font-bold font-orbitron text-white/90 mb-4 text-center">
+                              {etape.numero}
+                            </div>
+                            <h3 className="text-xl font-bold font-orbitron text-white mb-4 text-center">
+                              {etape.titre}
+                            </h3>
+                            <p className="text-white/95 text-base text-left leading-relaxed px-2">
+                              {etape.description}
+                            </p>
                           </div>
                         </div>
-                        <div className="text-2xl font-bold font-orbitron text-mauve-profond mb-3 text-center">
-                          {etape.numero}
-                        </div>
-                        <h3 className="text-xl font-bold font-orbitron text-gray-900 text-center">
-                          {etape.titre}
-                        </h3>
-                      </div>
-                    }
-                    back={
-                      <div className="flex flex-col h-full justify-center p-6">
-                        <p className="text-white/90 text-base text-justify leading-relaxed" style={{ wordSpacing: '-0.1em' }}>
-                          {etape.description}
-                        </p>
-                      </div>
-                    }
-                    className="h-[280px]"
-                  />
+                      }
+                      className="h-[320px]"
+                    />
+                  </div>
+                  
+                  {/* Bordure épaisse blanche avec effet 3D */}
+                  <div 
+                    className="absolute inset-0 rounded-xl pointer-events-none"
+                    style={{
+                      border: '4px solid white',
+                      boxShadow: '0 0 0 4px rgba(255,255,255,0.8), 0 12px 40px rgba(0,0,0,0.15), 0 0 100px rgba(107, 70, 193, 0.2), inset 0 0 40px rgba(255,255,255,0.3), inset 0 2px 0 rgba(255,255,255,0.6)',
+                    }}
+                  ></div>
+                  
+                  {/* Effet brillant animé */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none rounded-xl overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-shimmer"></div>
+                  </div>
                 </motion.div>
 
-                {/* Flèche entre les cartes */}
+                {/* Flèche animée entre les cartes */}
                 {index < etapes.length - 1 && (
                   <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -30, scale: 0.5 }}
+                    whileInView={{ opacity: 1, x: 0, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                    className="hidden lg:flex items-center justify-center mx-2"
+                    transition={{ duration: 0.6, delay: index * 0.15 + 0.3, type: "spring" }}
+                    className="hidden lg:flex items-center justify-center mx-4 relative"
                   >
-                    <ArrowRight className="w-8 h-8 text-mauve-profond" />
+                    <motion.div
+                      animate={{ x: [0, 10, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+                      className="relative"
+                    >
+                      {/* Flèche avec glow */}
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-mauve-profond/30 blur-lg"></div>
+                        <div className="relative bg-white p-3 rounded-full shadow-xl border-2 border-mauve-profond/20">
+                          <ArrowRight className="w-6 h-6 text-mauve-profond" />
+                        </div>
+                      </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </div>
@@ -686,17 +779,21 @@ function CommentCaMarche() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="text-center mt-16"
         >
           <Link href="/processus">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-mauve-profond text-white rounded-lg font-semibold hover:bg-bleu-gris transition-colors shadow-lg"
+              className="relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-mauve-profond to-bleu-gris text-white rounded-xl font-semibold shadow-2xl overflow-hidden group"
+              style={{
+                boxShadow: '0 10px 40px rgba(107, 70, 193, 0.4), 0 0 60px rgba(107, 70, 193, 0.2)',
+              }}
             >
-              Découvrir notre processus en détail
-              <ArrowRightCircle className="w-5 h-5" />
+              <div className="absolute inset-0 bg-gradient-to-r from-bleu-gris to-mauve-profond opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <span className="relative z-10">Découvrir notre processus en détail</span>
+              <ArrowRightCircle className="w-6 h-6 relative z-10" />
             </motion.button>
           </Link>
         </motion.div>
@@ -836,7 +933,7 @@ function ContactCTA() {
                   </div>
                   <div>
                     <p className="font-semibold mb-1">Téléphone</p>
-                    <p className="text-white/80">+33 X XX XX XX XX</p>
+                    <p className="text-white/80">+212 6 60 89 35 53</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

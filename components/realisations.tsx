@@ -2,7 +2,8 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import { Image, Smartphone, Globe, Film, TrendingUp, Users, Zap, Code, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
+import { Image as ImageIcon, Smartphone, Globe, Film, TrendingUp, Users, Zap, Code, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const projetsPhares = [
   {
@@ -19,6 +20,11 @@ const projetsPhares = [
     icon: Code,
     couleur: 'from-blue-500 to-cyan-500',
     images: 3,
+    imageFiles: [
+      '1_suite.webp',
+      '2_suite.webp',
+      '3_suite.webp',
+    ],
   },
   {
     id: 'marketing-digital',
@@ -33,22 +39,32 @@ const projetsPhares = [
     },
     icon: TrendingUp,
     couleur: 'from-purple-500 to-pink-500',
-    images: 2,
+    images: 3,
+    imageFiles: [
+      '1_marketingdigital.webp',
+      '2_marketingdigital.webp',
+      '3_marketingdigital.webp',
+    ],
   },
   {
-    id: 'hairnow',
-    titre: 'HairNow',
-    categorie: 'Application Mobile',
-    description: 'Application mobile et tablette révolutionnaire pour la gestion des rendez-vous dans les salons de beauté et de coiffure.',
-    descriptionLongue: 'Solution complète permettant aux salons de gérer leurs rendez-vous, clients, planning et services via une interface intuitive disponible sur mobile et tablette.',
-    technologies: ['Mobile', 'Tablette', 'iOS', 'Android'],
+    id: 'applications-mobiles',
+    titre: 'Applications Mobiles',
+    categorie: 'Développement Mobile',
+    description: 'Développement d\'applications mobiles natives et cross-platform pour iOS et Android, offrant des performances optimales et une expérience utilisateur fluide.',
+    descriptionLongue: 'Nous créons des applications mobiles sur mesure adaptées à vos besoins spécifiques. Que ce soit pour la gestion, le e-commerce, les services ou l\'innovation, nos applications sont développées avec les dernières technologies pour garantir performance, sécurité et scalabilité.',
+    technologies: ['React Native', 'Flutter', 'iOS', 'Android', 'Cross-platform'],
     stats: {
-      clients: 'En développement',
-      label: 'Statut',
+      clients: 'Multiples',
+      label: 'Applications développées',
     },
     icon: Smartphone,
     couleur: 'from-green-500 to-emerald-500',
-    images: 4,
+    images: 3,
+    imageFiles: [
+      'Design sans titre_mobileapp.webp',
+      '2_mobileapp.webp',
+      '3_mobileapp.webp',
+    ],
   },
   {
     id: 'sites-web',
@@ -63,7 +79,12 @@ const projetsPhares = [
     },
     icon: Globe,
     couleur: 'from-orange-500 to-red-500',
-    images: 6,
+    images: 3,
+    imageFiles: [
+      'atlas_.webp',
+      'nexus_.webp',
+      'tawba_.webp',
+    ],
   },
   {
     id: 'video-production',
@@ -78,13 +99,21 @@ const projetsPhares = [
     },
     icon: Film,
     couleur: 'from-pink-500 to-rose-500',
-    images: 5,
+    images: 3,
+    isVideo: true,
+    videos: [
+      'Videohive - Feel The Game - Sport Intro - 60610635.webm',
+      'Videohive - Product Shop Promo - 60506378.webm',
+      'Videohive - Slideshow Intro - 60234555.webm',
+    ],
   },
 ]
 
 // Composant Slider
-function ProjectSlider({ projet, totalImages }: { projet: typeof projetsPhares[0], totalImages: number }) {
+function ProjectSlider({ projet, totalImages }: { projet: typeof projetsPhares[0] & { isVideo?: boolean, videos?: string[], imageFiles?: string[] }, totalImages: number }) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const isVideoProject = projet.isVideo && projet.videos
+  const hasImages = projet.imageFiles && projet.imageFiles.length > 0
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % totalImages)
@@ -99,18 +128,50 @@ function ProjectSlider({ projet, totalImages }: { projet: typeof projetsPhares[0
       {/* Slider principal */}
       <div className="relative bg-gray-100 rounded-2xl overflow-hidden min-h-[400px] border-2 border-dashed border-gray-300">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 flex flex-col items-center justify-center p-12"
-          >
-            <Image className="w-20 h-20 text-gray-400 mb-4" />
-            <p className="text-gray-500 text-lg font-medium">Image {currentIndex + 1}</p>
-            <p className="text-gray-400 text-sm mt-2">1200x800px - {projet.titre}</p>
-          </motion.div>
+          {isVideoProject && projet.videos ? (
+            <motion.video
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              src={`/images/${projet.videos[currentIndex]}`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : hasImages && projet.imageFiles ? (
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={`/images/${projet.imageFiles[currentIndex]}`}
+                alt={`${projet.titre} - Image ${currentIndex + 1}`}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 flex flex-col items-center justify-center p-12"
+            >
+              <ImageIcon className="w-20 h-20 text-gray-400 mb-4" />
+              <p className="text-gray-500 text-lg font-medium">Image {currentIndex + 1}</p>
+              <p className="text-gray-400 text-sm mt-2">1200x800px - {projet.titre}</p>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Boutons navigation */}
@@ -149,20 +210,36 @@ function ProjectSlider({ projet, totalImages }: { projet: typeof projetsPhares[0
         )}
       </div>
 
-      {/* Miniatures en bas (si plusieurs images) */}
+      {/* Miniatures en bas (si plusieurs images/vidéos) */}
       {totalImages > 1 && (
         <div className="grid grid-cols-4 gap-3 mt-4">
           {Array.from({ length: Math.min(totalImages, 4) }).map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`bg-gray-100 rounded-lg p-4 border-2 border-dashed border-gray-300 aspect-video flex items-center justify-center transition-all duration-300 ${
+              className={`bg-gray-100 rounded-lg overflow-hidden border-2 border-dashed border-gray-300 aspect-video flex items-center justify-center transition-all duration-300 relative ${
                 index === currentIndex
                   ? 'border-mauve-profond ring-2 ring-mauve-profond/20'
                   : 'hover:border-gray-400'
               }`}
             >
-              <Image className="w-6 h-6 text-gray-400" />
+              {isVideoProject && projet.videos ? (
+                <video
+                  src={`/images/${projet.videos[index]}`}
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : hasImages && projet.imageFiles ? (
+                <Image
+                  src={`/images/${projet.imageFiles[index]}`}
+                  alt={`${projet.titre} - Miniature ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <ImageIcon className="w-6 h-6 text-gray-400" />
+              )}
             </button>
           ))}
         </div>
@@ -287,22 +364,13 @@ export default function RealisationsPage() {
                       </div>
 
                       {/* Stats */}
-                      <div className="flex items-center gap-6 p-6 bg-gradient-to-r from-mauve-profond/10 to-bleu-gris/10 rounded-xl border border-mauve-profond/20">
+                      <div className="p-6 bg-gradient-to-r from-mauve-profond/10 to-bleu-gris/10 rounded-xl border border-mauve-profond/20">
                         <div>
                           <div className="text-3xl font-bold font-orbitron text-mauve-profond">
                             {projet.stats.clients}
                           </div>
                           <div className="text-sm text-gray-600">{projet.stats.label}</div>
                         </div>
-                        <div className="flex-1 h-px bg-gradient-to-r from-mauve-profond/30 to-transparent"></div>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex items-center gap-2 px-6 py-3 bg-mauve-profond text-white rounded-lg font-semibold hover:bg-bleu-gris transition-colors"
-                        >
-                          Voir le projet
-                          <ArrowRight className="w-4 h-4" />
-                        </motion.button>
                       </div>
                     </motion.div>
                   </div>
@@ -330,37 +398,107 @@ export default function RealisationsPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((site) => (
-              <motion.div
-                key={site}
+            {[
+              {
+                id: 1,
+                nom: 'Tawba',
+                description: 'Site web moderne et performant',
+                lien: 'https://tawba.ma',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+              {
+                id: 2,
+                nom: 'Jouyaupara',
+                description: 'Plateforme web innovante',
+                lien: 'https://jouyaupara.com',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+              {
+                id: 3,
+                nom: 'Nexus Tech Canada',
+                description: 'Site web professionnel',
+                lien: 'https://nexustechcanada.com',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+              {
+                id: 4,
+                nom: 'EyeCorp',
+                description: 'Solution web sur mesure',
+                lien: 'https://eyecorp.ma',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+              {
+                id: 5,
+                nom: 'Atlas Gaming',
+                description: 'Boutique e-commerce gaming',
+                lien: 'https://atlasgaming.ma',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+              {
+                id: 6,
+                nom: 'BeautyNow',
+                description: 'Plateforme beauté et bien-être',
+                lien: 'https://beautynow.ma',
+                technologies: ['Next.js', 'React', 'TypeScript'],
+              },
+            ].map((site) => (
+              <motion.a
+                key={site.id}
+                href={site.lien || '#'}
+                target={site.lien ? '_blank' : undefined}
+                rel={site.lien ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: site * 0.1 }}
-                className="bg-gray-100 rounded-xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] transition-all duration-300 transform hover:-translate-y-2 group"
+                transition={{ duration: 0.5, delay: site.id * 0.1 }}
+                whileHover={{ y: -8 }}
+                className={`bg-gray-100 rounded-xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] transition-all duration-300 transform group block ${
+                  !site.lien ? 'cursor-default' : 'cursor-pointer'
+                }`}
                 style={{
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.05)',
+                }}
+                onClick={(e) => {
+                  if (!site.lien) {
+                    e.preventDefault()
+                  }
                 }}
               >
                 <div className="bg-gray-100 p-12 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center aspect-video relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-mauve-profond/5 to-bleu-gris/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Globe className="w-16 h-16 text-gray-400 mb-4 relative z-10" />
-                  <p className="text-gray-500 text-sm font-medium relative z-10">Site Web {site}</p>
-                  <p className="text-gray-400 text-xs mt-2 relative z-10">Lien à venir</p>
+                  <Globe className="w-16 h-16 text-gray-400 mb-4 relative z-10 group-hover:text-mauve-profond transition-colors duration-300" />
+                  <p className="text-gray-500 text-sm font-medium relative z-10">{site.nom}</p>
+                  {site.lien ? (
+                    <p className="text-mauve-profond text-xs mt-2 relative z-10 font-semibold">Cliquez pour visiter</p>
+                  ) : (
+                    <p className="text-gray-400 text-xs mt-2 relative z-10">Lien à venir</p>
+                  )}
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold font-orbitron text-gray-900 mb-2">
-                    Site Web {site}
+                  <h3 className="text-lg font-bold font-orbitron text-gray-900 mb-2 group-hover:text-mauve-profond transition-colors duration-300">
+                    {site.nom}
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Développé avec les dernières technologies
+                    {site.description}
                   </p>
-                  <div className="flex items-center gap-2 text-sm text-mauve-profond font-medium">
-                    <span>Voir le site</span>
-                    <ExternalLink className="w-4 h-4" />
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {site.technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-white/70 rounded-full text-xs text-gray-700 font-medium"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
+                  {site.lien && (
+                    <div className="flex items-center gap-2 text-sm text-mauve-profond font-medium group-hover:gap-3 transition-all duration-300">
+                      <span>Voir le site</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </div>
+                  )}
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </section>

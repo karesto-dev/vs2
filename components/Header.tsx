@@ -38,7 +38,23 @@ export default function Header() {
           <Link href="/">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold font-orbitron text-mauve-profond cursor-pointer"
+              animate={{
+                textShadow: [
+                  '0 0 10px rgba(107, 70, 193, 0.5)',
+                  '0 0 20px rgba(107, 70, 193, 0.8)',
+                  '0 0 10px rgba(107, 70, 193, 0.5)',
+                ],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              className="text-2xl font-bold font-orbitron text-mauve-profond cursor-pointer relative"
+              style={{
+                filter: 'drop-shadow(0 0 8px rgba(107, 70, 193, 0.6))',
+              }}
             >
               Vorion Studio
             </motion.div>
