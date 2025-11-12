@@ -28,6 +28,7 @@ import {
   Phone,
   Clock,
   Send,
+  CheckCircle2,
 } from 'lucide-react'
 
 // Section Hero
@@ -813,11 +814,50 @@ function ContactCTA() {
     email: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Logique d'envoi du formulaire
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nom: formData.nom,
+          email: formData.email,
+          message: formData.message,
+          sujet: 'Contact depuis la page d\'accueil',
+          telephone: '',
+          entreprise: '',
+          budget: '',
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erreur lors de l\'envoi du message')
+      }
+
+      // Succès
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      setFormData({
+        nom: '',
+        email: '',
+        message: ''
+      })
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (error: any) {
+      console.error('Erreur:', error)
+      alert(error.message || 'Une erreur est survenue. Veuillez réessayer.')
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -855,6 +895,23 @@ function ContactCTA() {
             <h3 className="text-2xl font-bold font-orbitron text-white mb-8">
               Envoyez-nous un message
             </h3>
+            {isSubmitted ? (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="text-center py-12"
+              >
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="w-10 h-10 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold font-orbitron text-white mb-2">
+                  Message envoyé !
+                </h3>
+                <p className="text-white/90">
+                  Nous vous répondrons dans les plus brefs délais.
+                </p>
+              </motion.div>
+            ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="nom" className="block text-white/90 mb-2 font-medium">
@@ -900,14 +957,25 @@ function ContactCTA() {
               </div>
               <motion.button
                 type="submit"
+                disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2 shadow-lg"
+                className="w-full px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5" />
-                Envoyer le message
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-mauve-profond border-t-transparent rounded-full animate-spin"></div>
+                    Envoi en cours...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Envoyer le message
+                  </>
+                )}
               </motion.button>
             </form>
+            )}
           </motion.div>
 
           <div className="space-y-6">

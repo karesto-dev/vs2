@@ -22,12 +22,39 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulation d'envoi
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erreur lors de l\'envoi du message')
+      }
+
+      // Succès
       setIsSubmitting(false)
       setIsSubmitted(true)
+      setFormData({
+        nom: '',
+        email: '',
+        telephone: '',
+        entreprise: '',
+        sujet: '',
+        message: '',
+        budget: '',
+      })
       setTimeout(() => setIsSubmitted(false), 5000)
-    }, 1500)
+    } catch (error: any) {
+      console.error('Erreur:', error)
+      alert(error.message || 'Une erreur est survenue. Veuillez réessayer.')
+      setIsSubmitting(false)
+    }
   }
 
   return (
