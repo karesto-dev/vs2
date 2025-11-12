@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Image as ImageIcon, MessageCircle, PenTool, Settings, Rocket, CheckCircle2, Clock, Users, FileText, Zap, Shield } from 'lucide-react'
 
@@ -262,13 +263,15 @@ export default function ProcessusPage() {
               <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
                 Contactez-nous dès aujourd'hui pour discuter de votre projet et découvrir comment nous pouvons vous accompagner.
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg text-lg"
-              >
-                Demander un devis gratuit
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg text-lg"
+                >
+                  Demander un devis gratuit
+                </motion.button>
+              </Link>
             </motion.div>
           </div>
         </motion.div>

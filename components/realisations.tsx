@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Image as ImageIcon, Smartphone, Globe, Film, TrendingUp, Users, Zap, Code, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -518,13 +519,15 @@ export default function RealisationsPage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Discutons de votre projet et découvrons ensemble comment nous pouvons le concrétiser
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg text-lg"
-            >
-              Discuter de votre projet
-            </motion.button>
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white text-mauve-profond rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg text-lg"
+              >
+                Discuter de votre projet
+              </motion.button>
+            </Link>
           </div>
         </motion.div>
       </div>

@@ -76,20 +76,24 @@ function Hero() {
               Transformons vos idées en solutions innovantes.
             </p>
             <div className="flex flex-wrap gap-5">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-mauve-profond text-white rounded-lg font-semibold hover:bg-bleu-gris transition-colors"
-              >
-                Découvrir nos services
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-mauve-profond border-2 border-mauve-profond rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-              >
-                Voir nos réalisations
-              </motion.button>
+              <Link href="/a-propos">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-mauve-profond text-white rounded-lg font-semibold hover:bg-bleu-gris transition-colors"
+                >
+                  Découvrir nos services
+                </motion.button>
+              </Link>
+              <Link href="/realisations">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white text-mauve-profond border-2 border-mauve-profond rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                >
+                  Voir nos réalisations
+                </motion.button>
+              </Link>
             </div>
           </motion.div>
           

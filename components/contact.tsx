@@ -280,7 +280,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900 mb-1">Téléphone</p>
-                    <a href="tel:+212XXXXXXXXX" className="text-mauve-profond hover:underline">
+                    <a href="tel:+212660893553" className="text-mauve-profond hover:underline">
                       +212 6 60 89 35 53
                     </a>
                   </div>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                   Discutez directement avec notre équipe sur WhatsApp pour une réponse immédiate à vos questions
                 </p>
                 <motion.a
-                  href="https://wa.me/33XXXXXXXXX"
+                  href="https://wa.me/212660893553"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
