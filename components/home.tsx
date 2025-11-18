@@ -33,6 +33,9 @@ import {
 
 // Section Hero
 function Hero() {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [videoError, setVideoError] = useState(false)
+
   return (
     <section id="accueil" className="pt-32 pb-32 px-6">
       <div className="container mx-auto max-w-7xl">
@@ -107,13 +110,34 @@ function Hero() {
             <div className="relative h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-mauve-profond to-bleu-gris rounded-2xl transform rotate-6 opacity-20"></div>
               <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-2xl h-full min-h-[400px]">
+                {/* Placeholder vidéo */}
+                {(!isVideoLoaded || videoError) && (
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-mauve-profond/20 via-bleu-gris/20 to-mauve-profond/20">
+                    <div className="text-center p-8">
+                      <div className="w-20 h-20 bg-mauve-profond/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <ImageIcon className="w-10 h-10 text-mauve-profond" />
+                      </div>
+                      <p className="text-gray-700 font-semibold mb-2">Vidéo à venir</p>
+                      <p className="text-gray-500 text-sm">Placeholder vidéo</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Vidéo */}
                 <video
-                  src="/images/Home_hero.mp4"
+                  src="/images/Home_hero2.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                    isVideoLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  onLoadedData={() => setIsVideoLoaded(true)}
+                  onError={() => {
+                    setVideoError(true)
+                    setIsVideoLoaded(false)
+                  }}
                 />
               </div>
             </div>
